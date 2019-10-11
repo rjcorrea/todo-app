@@ -9,12 +9,21 @@
           <span class="font-weight-light">APP</span>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn text to="/">
-          <v-avatar class="mr-2" color="primary" size="35">
-            <span class="white--text">RJ</span>
-          </v-avatar>
-          <span class="hidden-xs-only">Robin</span>
-        </v-btn>
+        <v-menu offset-y>
+          <template v-slot:activator="{ on }">
+            <v-btn v-on="on">
+              <v-avatar v-on="on" class="mr-2" color="primary" size="35">
+                <span class="white--text">RJ</span>
+              </v-avatar>
+              <span class="hidden-xs-only">Robin</span>
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-item to="/">
+              <v-list-item-title>Logout</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
       </v-app-bar>
     </template>
     <v-content>
