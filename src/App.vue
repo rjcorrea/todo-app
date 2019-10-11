@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app v-if="route != '/'">
+    <v-app-bar app v-if="$route.path != '/'">
       <v-toolbar-title class="headline text-uppercase">
         <span>TODO</span>
         <span class="font-weight-light">APP</span>
@@ -10,7 +10,6 @@
         <span class="mr-2">Latest Release</span>
       </v-btn>
     </v-app-bar>
-
     <v-content>
       <router-view></router-view>
     </v-content>
@@ -21,9 +20,7 @@
 export default {
   name: "App",
   data() {
-    return {
-      route: this.$route.path
-    };
+    return {};
   }
 };
 </script>

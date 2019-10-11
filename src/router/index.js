@@ -1,15 +1,12 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Login from "@/pages/Login";
+import routes from "@/router/routes";
 
 Vue.use(VueRouter);
 
-export default new VueRouter({
-  routes: [
-    {
-      path: "/",
-      component: Login
-    }
-  ],
-  mode: "history"
+const router = new VueRouter({
+  mode: "history",
+  routes
 });
+
+export default router;
