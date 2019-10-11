@@ -1,18 +1,29 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/" exact>Home 12345</router-link>|
-      <router-link to="/todos" exact>Todos</router-link>
-    </nav>
-    <router-view></router-view>
-  </div>
+  <v-app>
+    <v-app-bar app v-if="route != '/'">
+      <v-toolbar-title class="headline text-uppercase">
+        <span>TODO</span>
+        <span class="font-weight-light">APP</span>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn text href="https://github.com/vuetifyjs/vuetify/releases/latest" target="_blank">
+        <span class="mr-2">Latest Release</span>
+      </v-btn>
+    </v-app-bar>
+
+    <v-content>
+      <router-view></router-view>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
 export default {
-  name: "App"
+  name: "App",
+  data() {
+    return {
+      route: this.$route.path
+    };
+  }
 };
 </script>
-
-<style>
-</style>
