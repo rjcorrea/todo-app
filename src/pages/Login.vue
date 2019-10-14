@@ -1,8 +1,11 @@
 <template>
   <v-app>
     <v-layout align-center justify-center row fill-height>
-      <v-row class="fill-height" align="center" justify="center">
+      <v-row align="center" justify="center">
         <v-col cols="12" sm="6" md="5" lg="4" xl="3">
+          <v-row justify="center">
+            <v-img src="@/assets/logo.png" aspect-ratio="1" max-width="120" max-height="120"></v-img>
+          </v-row>
           <v-container>
             <v-card>
               <v-card-title>
