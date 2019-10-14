@@ -2,38 +2,41 @@
   <div>
     <v-container>
       <h2>My Todos</h2>
-      <v-card>
-        <v-list-item two-line v-for="todo in todos" :key="todo.id">
-          <v-list-item-content>
-            <v-list-item-title>{{todo.title}}</v-list-item-title>
-            <v-list-item-subtitle>{{todo.description}}</v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item>
-      </v-card>
+
+      <v-data-table :headers="headers" :items="TODOS.data" :items-per-page="10"></v-data-table>
     </v-container>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "TodoIndex",
   data() {
     return {
-      todos: [
+      headers: [
         {
-          title: "Title 1",
-          description: "Description 1"
+          text: "ID",
+          value: "id"
         },
         {
-          title: "Title 2",
-          description: "Description 2"
+          text: "Title",
+          value: "name"
         },
-        {
-          title: "Title 3",
-          description: "Description 3"
-        }
+        { text: "Description", value: "description" }
       ]
     };
+  },
+  methods: {
+    fetchTodos() {
+      this.$store.dispatch("todos/getTodo");
+    }
+  },
+  computed: {
+    ...mapGetters("todos", ["TODOS"])
+  },
+  created() {
+    this.fetchTodos();
   }
 };
 </script>

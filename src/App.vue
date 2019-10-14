@@ -11,7 +11,7 @@
         <v-spacer></v-spacer>
         <v-menu offset-y>
           <template v-slot:activator="{ on }">
-            <v-btn v-on="on">
+            <v-btn v-on="on" text>
               <v-avatar v-on="on" class="mr-2" color="primary" size="35">
                 <span class="white--text">RJ</span>
               </v-avatar>
