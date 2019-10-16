@@ -19,7 +19,7 @@
             </v-btn>
           </template>
           <v-list>
-            <v-list-item to="/">
+            <v-list-item :to="{ name: 'logout' }">
               <v-list-item-title>Logout</v-list-item-title>
             </v-list-item>
           </v-list>
@@ -43,6 +43,11 @@ export default {
     return {
       drawer: true
     };
+  },
+  computed: {
+    loggedIn() {
+      return this.$store.getters.loggedIn;
+    }
   }
 };
 </script>

@@ -3,7 +3,12 @@
     <v-container>
       <h2>My Todos</h2>
 
-      <v-data-table :headers="headers" :items="TODOS.data" :items-per-page="10"></v-data-table>
+      <v-data-table
+        :headers="headers"
+        :items="TODOS.data"
+        :items-per-page="TODOS.per_page"
+        loading="true"
+      ></v-data-table>
     </v-container>
   </div>
 </template>

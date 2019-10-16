@@ -7,29 +7,30 @@
             <v-img src="@/assets/logo.png" aspect-ratio="1" max-width="120" max-height="120"></v-img>
           </v-row>
           <v-container>
-            <v-card>
-              <v-card-title>
-                <h1 class="display-1">Login</h1>
-              </v-card-title>
-              <v-divider></v-divider>
-              <v-card-text>
-                <v-form>
-                  <v-text-field label="Username" prepend-icon="mdi-account-circle" />
+            <v-form @submit.prevent="attemptLogin()">
+              <v-card>
+                <v-card-title>
+                  <h1 class="display-1">Login</h1>
+                </v-card-title>
+                <v-divider></v-divider>
+                <v-card-text>
+                  <v-text-field label="Email" prepend-icon="mdi-account-circle" v-model="email" />
                   <v-text-field
                     :type="showPassword ? 'text' : 'password'"
                     label="Password"
                     prepend-icon="mdi-lock"
                     :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                     @click:append="showPassword = !showPassword"
+                    v-model="password"
                   />
-                </v-form>
-              </v-card-text>
-              <v-divider></v-divider>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="primary">Login</v-btn>
-              </v-card-actions>
-            </v-card>
+                </v-card-text>
+                <v-divider></v-divider>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="primary" type="submit">Login</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-form>
           </v-container>
         </v-col>
       </v-row>
@@ -42,8 +43,22 @@ export default {
   name: "Login",
   data() {
     return {
+      email: "",
+      password: "",
+      invalidCredentials: false,
       showPassword: false
     };
+  },
+  methods: {
+    attemptLogin() {
+      const credentials = {
+        email: this.email,
+        password: this.password
+      };
+      this.$store.dispatch("auth/login", credentials).then(() => {
+        this.$router.push({ name: "todos" });
+      });
+    }
   }
 };
 </script>
