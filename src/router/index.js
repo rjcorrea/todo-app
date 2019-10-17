@@ -11,10 +11,16 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (localStorage.getItem("access_token")) {
+    if (localStorage.getItem("access_token") !== null) {
       next();
     } else {
+      next("/login");
+    }
+  } else if (to.matched.some(record => record.meta.requiresVisitor)) {
+    if (localStorage.getItem("access_token") !== null) {
       next("/");
+    } else {
+      next();
     }
   } else {
     next();

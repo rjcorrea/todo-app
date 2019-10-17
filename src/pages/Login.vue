@@ -27,7 +27,15 @@
                 <v-divider></v-divider>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="primary" type="submit">Login</v-btn>
+                  <v-btn
+                    color="primary"
+                    type="submit"
+                    block
+                    large
+                    depressed
+                    class="mt-4"
+                    :loading="loading"
+                  >Login</v-btn>
                 </v-card-actions>
               </v-card>
             </v-form>
@@ -46,17 +54,20 @@ export default {
       email: "",
       password: "",
       invalidCredentials: false,
-      showPassword: false
+      showPassword: false,
+      loading: false
     };
   },
   methods: {
     attemptLogin() {
+      this.loading = true;
       const credentials = {
         email: this.email,
         password: this.password
       };
       this.$store.dispatch("auth/login", credentials).then(() => {
-        this.$router.push({ name: "todos" });
+        this.loading = false;
+        this.$router.push({ name: "dashboard" });
       });
     }
   }

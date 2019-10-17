@@ -8,6 +8,7 @@
         :items="TODOS.data"
         :items-per-page="TODOS.per_page"
         loading="true"
+        disable-pagination
       ></v-data-table>
     </v-container>
   </div>
