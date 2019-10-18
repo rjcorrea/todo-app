@@ -11,11 +11,8 @@ export default {
         });
     },
     deleteToken() {
-      axios.defaults.headers.common["Authorization"] =
-        "Bearer " + localStorage.getItem("access_token");
-
       return axios.post("http://localhost:8000/api/logout").then(() => {
-        localStorage.removeItem("access_token");
+        localStorage.clear();
       });
     }
   }
