@@ -5,12 +5,20 @@
 
       <v-data-table
         :headers="headers"
-        :items="TODOS.data"
-        :items-per-page="TODOS.per_page"
+        :items="getTodos.data"
+        :server-items-length="getTodos.total"
         loading="true"
-        disable-pagination
+        hide-default-footer
       ></v-data-table>
     </v-container>
+      <div class="text-center">
+    <v-pagination
+      v-model="pagination.current_page"
+      total-visible="5"
+      :length="pagination.last_page"
+      @input="paginateCall"
+    ></v-pagination>
+    </div>
   </div>
 </template>
 
@@ -21,25 +29,20 @@ export default {
   data() {
     return {
       headers: [
-        {
-          text: "ID",
-          value: "id"
-        },
-        {
-          text: "Title",
-          value: "name"
-        },
+        { text: "ID", value: "id"},
+        { text: "Title", value: "name"},
         { text: "Description", value: "description" }
-      ]
+      ],
+      pagination:{}
     };
   },
   methods: {
     fetchTodos() {
-      this.$store.dispatch("todos/getTodo");
+      this.$store.dispatch("todos/getTodos");
     }
   },
   computed: {
-    ...mapGetters("todos", ["TODOS"])
+    ...mapGetters("todos", ["getTodos"])
   },
   created() {
     this.fetchTodos();

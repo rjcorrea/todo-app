@@ -5,13 +5,14 @@ export default {
   actions: {
     login(context, credentials) {
       return axios
-        .post("http://localhost:8000/api/login", credentials)
+        .post(`${process.env.VUE_APP_MAIN_API}/api/login`, credentials)
         .then(response => {
           localStorage.setItem("user", JSON.stringify(response.data));
         });
     },
     deleteToken() {
-      return axios.post("http://localhost:8000/api/logout").then(() => {
+      
+      return axios.post(`${process.env.VUE_APP_MAIN_API}/api/logout`).then(() => {
         localStorage.clear();
       });
     }

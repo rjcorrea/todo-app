@@ -1,23 +1,21 @@
 import axios from "axios";
-axios.defaults.headers.post["Content-Type"] = "application/json";
-
 export default {
   namespaced: true,
   state: {
     todos: []
   },
   getters: {
-    TODOS: state => state.todos
+    getTodos: state => state.todos
   },
   mutations: {
-    SET_TODO: (state, payload) => {
+    SET_TODOS: (state, payload) => {
       state.todos = payload;
     }
   },
   actions: {
-    getTodo: async context => {
-      await axios.get("http://localhost:8000/api/todos").then(response => {
-        context.commit("SET_TODO", response.data);
+    getTodos: async context => {
+      await axios.get(`${process.env.VUE_APP_MAIN_API}/api/todos`).then(response => {
+        context.commit("SET_TODOS", response.data);
       });
     }
   }
