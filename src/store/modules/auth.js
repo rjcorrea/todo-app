@@ -7,8 +7,7 @@ export default {
       return axios
         .post("http://localhost:8000/api/login", credentials)
         .then(response => {
-          localStorage.setItem("access_token", response.data.access_token);
-          localStorage.setItem("user", JSON.stringify(response.data.user));
+          localStorage.setItem("user", JSON.stringify(response.data));
         });
     },
     deleteToken() {

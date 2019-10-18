@@ -4,12 +4,11 @@ import vuetify from "./plugins/vuetify";
 import store from "./store";
 import router from "./router";
 import axios from "axios";
+import {middleware} from "./middleware";
 
-axios.defaults.headers.post["Content-Type"] = "application/json";
-axios.defaults.headers.post["Accept"] = "application/json";
+middleware(router,axios);
 
 Vue.config.productionTip = false;
-
 new Vue({
   store,
   router,

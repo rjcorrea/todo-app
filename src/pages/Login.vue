@@ -67,7 +67,7 @@ export default {
       };
       this.$store.dispatch("auth/login", credentials).then(() => {
         this.loading = false;
-        this.$router.push({ name: "dashboard" });
+        this.$router.push('/');
       });
     }
   }
