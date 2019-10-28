@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: "Login",
   data() {
@@ -59,13 +60,14 @@ export default {
     };
   },
   methods: {
-    attemptLogin() {
-      this.loading = true;
+    ...mapActions('auth', ['login']),
+    async attemptLogin() {
       const credentials = {
         email: this.email,
         password: this.password
       };
-      this.$store.dispatch("auth/login", credentials).then(() => {
+      this.loading = true;
+      await this.login(credentials).then(() => {
         this.loading = false;
         this.$router.push('/');
       });

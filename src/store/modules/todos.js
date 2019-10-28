@@ -5,7 +5,7 @@ export default {
     todos: []
   },
   getters: {
-    getTodos: state => state.todos
+    getTodos: state => state.todos,
   },
   mutations: {
     SET_TODOS: (state, payload) => {
@@ -13,8 +13,8 @@ export default {
     }
   },
   actions: {
-    getTodos: async context => {
-      await axios.get(`${process.env.VUE_APP_MAIN_API}/api/todos`).then(response => {
+    getTodos: context => {
+      return axios.get(`${process.env.VUE_APP_MAIN_API}/api/todos`).then(response => {
         context.commit("SET_TODOS", response.data);
       });
     }

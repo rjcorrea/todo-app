@@ -7,18 +7,9 @@
         :headers="headers"
         :items="getTodos.data"
         :server-items-length="getTodos.total"
-        loading="true"
-        hide-default-footer
+        :loading="loading"
       ></v-data-table>
     </v-container>
-      <div class="text-center">
-    <v-pagination
-      v-model="pagination.current_page"
-      total-visible="5"
-      :length="pagination.last_page"
-      @input="paginateCall"
-    ></v-pagination>
-    </div>
   </div>
 </template>
 
@@ -33,12 +24,17 @@ export default {
         { text: "Title", value: "name"},
         { text: "Description", value: "description" }
       ],
-      pagination:{}
+      pagination:{},
+      loading: false
     };
   },
   methods: {
     fetchTodos() {
-      this.$store.dispatch("todos/getTodos");
+      this.loading = true
+      this.$store.dispatch("todos/getTodos").then(() => {
+        this.loading = false
+      });
+
     }
   },
   computed: {

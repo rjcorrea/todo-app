@@ -1,20 +1,17 @@
-import axios from "axios";
+import auth from '@/services/auth.js';
 
 export default {
   namespaced: true,
   actions: {
     login(context, credentials) {
-      return axios
-        .post(`${process.env.VUE_APP_MAIN_API}/api/login`, credentials)
-        .then(response => {
-          localStorage.setItem("user", JSON.stringify(response.data));
-        });
+      return auth.login(credentials).then((response) => {
+        auth.setAuth(response.data.auth);
+        auth.setUser(response.data.user);
+      })
     },
-    deleteToken() {
-      
-      return axios.post(`${process.env.VUE_APP_MAIN_API}/api/logout`).then(() => {
-        localStorage.clear();
-      });
+    logout() {
+      auth.flush()
+      return auth.logout();
     }
   }
 };

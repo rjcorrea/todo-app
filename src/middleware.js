@@ -1,3 +1,4 @@
+import auth from '@/services/auth.js';
 export function middleware(router, axios){
     axios.interceptors.response.use(null, (error) => {
         if(error.response.status == 401 || error.response.status == 403){
@@ -13,7 +14,7 @@ export function middleware(router, axios){
         const currentUser = JSON.parse(localStorage.getItem('user'));
 
         if(currentUser){
-            axios.defaults.headers.common['Authorization'] = `Bearer ${currentUser.access_token}`;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${auth.getAuth().access_token}`;
         }
 
         if(requiresAuth && !currentUser){

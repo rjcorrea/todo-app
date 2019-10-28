@@ -35,9 +35,9 @@
         <template v-slot:activator="{ on }">
           <v-btn v-on="on" text>
             <v-avatar class="mr-2" color="primary" size="35">
-              <span class="white--text">RJ</span>
+              <span class="white--text" v-if="user != null">{{ user.name.charAt(0) }}</span>
             </v-avatar>
-            <span class="hidden-xs-only">Robin</span>
+            <span class="hidden-xs-only" v-if="user != null">{{ user.name }}</span>
           </v-btn>
         </template>
         <v-list>
@@ -51,19 +51,25 @@
 </template>
 
 <script>
+import auth from '@/mixins/auth'
 export default {
   name: "AppHeader",
+  mixins: [ auth ],
   data() {
     return {
+      user: null,
       drawer: true
     };
   },
   methods: {
-    logout() {
-      this.$store.dispatch("auth/deleteToken").then(() => {
-        this.$router.push({ name: "login" });
+    logout(){
+      this.$store.dispatch('auth/logout').then(() => {
+        this.$router.push('/login');
       });
     }
+  },
+  created(){
+    this.user = this.getUser()
   }
 };
 </script>
