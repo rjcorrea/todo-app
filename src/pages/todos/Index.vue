@@ -10,6 +10,9 @@
         :loading="loading"
         :options.sync="options"
         :page.sync="page"
+        :sort-by="sortBy"
+        :sort-desc="sortDesc"
+        must-sort
         hide-default-footer
       ></v-data-table>
 
