@@ -43,7 +43,7 @@ export default {
       options: {},
       page : 1,
       sortBy: 'id',
-      sortDesc: 'desc'
+      sortDesc: true
     };
   },
   methods: {
@@ -56,7 +56,7 @@ export default {
     paginateCall(page){
       const params = {
         sortBy : this.sortBy,
-        sortDesc : this.sortDesc,
+        sortDesc : this.sortDesc ? 'desc' : 'asc',
         page : page
       };
       this.fetchItems(params);
@@ -68,11 +68,13 @@ export default {
   watch: {
     options: {
       handler () {
-            const params = {
-              sortBy : this.options.sortDesc[0] ? this.options.sortBy[0] : this.sortBy,
-              sortDesc : this.options.sortDesc[0] ? 'desc' : 'asc',
-              page : this.page
-            };
+          this.sortBy = this.options.sortBy[0];
+          this.sortDesc = this.options.sortDesc[0];
+          const params = {
+            sortBy : this.options.sortDesc[0] ? this.options.sortBy[0] : this.sortBy,
+            sortDesc : this.options.sortDesc[0] ? 'desc' : 'asc',
+            page : this.page
+          };
           this.fetchItems(params);
       },
       deep: true,
@@ -81,7 +83,7 @@ export default {
   created() {
   const params = {
     sortBy : this.sortBy,
-    sortDesc : this.sortDesc,
+    sortDesc : this.sortDesc ? 'desc' : 'asc',
     page : this.page
   };
     this.fetchItems(params);
