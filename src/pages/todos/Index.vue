@@ -9,6 +9,7 @@
         :server-items-length="getItems.total"
         :loading="loading"
         :options.sync="options"
+        :page.sync="page"
         hide-default-footer
       ></v-data-table>
 
@@ -36,25 +37,51 @@ export default {
         { text: "Description", value: "description" }
       ],
       loading: false,
-      options: {}
+      options: {},
+      page : 1,
+      sortBy: 'id',
+      sortDesc: 'desc'
     };
   },
   methods: {
-    fetchItems(page = null) {
+    fetchItems(payload) {
       this.loading = true
-      this.$store.dispatch("todos/getItems", page).then(() => {
+      this.$store.dispatch("todos/getItems", payload).then(() => {
         this.loading = false
       });
     },
-    paginateCall(page = null){
-      this.fetchItems(page);
+    paginateCall(page){
+      const params = {
+        sortBy : this.sortBy,
+        sortDesc : this.sortDesc,
+        page : page
+      };
+      this.fetchItems(params);
     }
   },
   computed: {
     ...mapGetters("todos", ["getItems"])
   },
+  watch: {
+    options: {
+      handler () {
+            const params = {
+              sortBy : this.options.sortDesc[0] ? this.options.sortBy[0] : this.sortBy,
+              sortDesc : this.options.sortDesc[0] ? 'desc' : 'asc',
+              page : this.page
+            };
+          this.fetchItems(params);
+      },
+      deep: true,
+    },
+  },
   created() {
-    this.fetchItems();
+  const params = {
+    sortBy : this.sortBy,
+    sortDesc : this.sortDesc,
+    page : this.page
+  };
+    this.fetchItems(params);
   }
 };
 </script>

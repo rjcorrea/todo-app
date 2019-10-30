@@ -13,10 +13,12 @@ export default {
     }
   },
   actions: {
-    getItems: (context, page) => {
+    getItems: (context, payload) => {
       return axios.get(`${process.env.VUE_APP_MAIN_API}/api/todos`, {
         params:{
-          page : page
+          page : payload.page,
+          sortBy: payload.sortBy,
+          sortDesc : payload.sortDesc
       }}).then(response => {
         context.commit("SET_ITEMS", response.data);
       });
