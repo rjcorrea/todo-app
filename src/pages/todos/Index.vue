@@ -53,7 +53,7 @@ export default {
         this.loading = false
       });
     },
-    paginateCall(page){
+    paginateCall(page = this.page){
       const params = {
         sortBy : this.sortBy,
         sortDesc : this.sortDesc ? 'desc' : 'asc',
