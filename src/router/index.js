@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import routes from "@/router/routes";
 import axios from "axios";
+import routes from "@/router/routes";
 import auth from '@/services/auth';
 Vue.use(VueRouter);
 
@@ -19,15 +19,14 @@ axios.interceptors.response.use(null, (error) => {
 
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-  const currentUser = auth.getUser();
 
-  if(currentUser){
+  if(auth.getUser()){
       axios.defaults.headers.common['Authorization'] = `Bearer ${auth.getAuth().access_token}`;
   }
 
-  if(requiresAuth && !currentUser){
+  if(requiresAuth && !auth.getUser()){
       next('/login');
-  } else if(to.path == '/login' && currentUser) {
+  } else if(to.path == '/login' && auth.getUser()) {
       next('/');
   } else {
       next();

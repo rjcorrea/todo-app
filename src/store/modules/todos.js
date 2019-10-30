@@ -2,20 +2,23 @@ import axios from "axios";
 export default {
   namespaced: true,
   state: {
-    todos: []
+    items: []
   },
   getters: {
-    getTodos: state => state.todos,
+    getItems: state => state.items,
   },
   mutations: {
-    SET_TODOS: (state, payload) => {
-      state.todos = payload;
+    SET_ITEMS: (state, payload) => {
+      state.items = payload;
     }
   },
   actions: {
-    getTodos: context => {
-      return axios.get(`${process.env.VUE_APP_MAIN_API}/api/todos`).then(response => {
-        context.commit("SET_TODOS", response.data);
+    getItems: (context, page) => {
+      return axios.get(`${process.env.VUE_APP_MAIN_API}/api/todos`, {
+        params:{
+          page : page
+      }}).then(response => {
+        context.commit("SET_ITEMS", response.data);
       });
     }
   }

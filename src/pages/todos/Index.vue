@@ -5,10 +5,21 @@
 
       <v-data-table
         :headers="headers"
-        :items="getTodos.data"
-        :server-items-length="getTodos.total"
+        :items="getItems.data"
+        :server-items-length="getItems.total"
         :loading="loading"
+        :options.sync="options"
+        hide-default-footer
       ></v-data-table>
+
+    <v-pagination
+      v-model="getItems.current_page"
+      :length="getItems.last_page"
+      :total-visible="10"
+      circle
+      @input="paginateCall"
+    ></v-pagination>
+
     </v-container>
   </div>
 </template>
@@ -24,24 +35,26 @@ export default {
         { text: "Title", value: "name"},
         { text: "Description", value: "description" }
       ],
-      pagination:{},
-      loading: false
+      loading: false,
+      options: {}
     };
   },
   methods: {
-    fetchTodos() {
+    fetchItems(page = null) {
       this.loading = true
-      this.$store.dispatch("todos/getTodos").then(() => {
+      this.$store.dispatch("todos/getItems", page).then(() => {
         this.loading = false
       });
-
+    },
+    paginateCall(page = null){
+      this.fetchItems(page);
     }
   },
   computed: {
-    ...mapGetters("todos", ["getTodos"])
+    ...mapGetters("todos", ["getItems"])
   },
   created() {
-    this.fetchTodos();
+    this.fetchItems();
   }
 };
 </script>

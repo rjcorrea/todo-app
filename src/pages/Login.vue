@@ -23,6 +23,14 @@
                     @click:append="showPassword = !showPassword"
                     v-model="password"
                   />
+                  <v-alert
+                    dense
+                    text
+                    type="error"
+                    :value="invalidCredentials"
+                  >
+                    Invalid credentials.
+                  </v-alert>
                 </v-card-text>
                 <v-divider></v-divider>
                 <v-card-actions>
@@ -47,7 +55,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import auth from '@/services/auth'
 export default {
   name: "Login",
   data() {
@@ -60,17 +68,23 @@ export default {
     };
   },
   methods: {
-    ...mapActions('auth', ['login']),
     async attemptLogin() {
       const credentials = {
         email: this.email,
         password: this.password
       };
       this.loading = true;
-      await this.login(credentials).then(() => {
-        this.loading = false;
+      await auth.login(credentials).then((response) => {
+        auth.setAuth(response.data.auth);
+        auth.setUser(response.data.user);
         this.$router.push('/');
-      });
+      }).catch((error) => {
+        if(error.response.status == 401 || error.response.status == 403){
+          this.invalidCredentials = true;
+        }
+      }).finally(() => {
+        this.loading = false;
+      })
     }
   }
 };
