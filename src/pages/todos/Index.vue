@@ -2,7 +2,6 @@
   <div>
     <v-container>
       <h2>My Todos</h2>
-
       <v-data-table
         :headers="headers"
         :items="getItems.data"
@@ -23,7 +22,6 @@
       circle
       @input="paginateCall"
     ></v-pagination>
-
     </v-container>
   </div>
 </template>
@@ -34,16 +32,16 @@ export default {
   name: "TodoIndex",
   data() {
     return {
-      headers: [
-        { text: "ID", value: "id"},
-        { text: "Title", value: "name"},
-        { text: "Description", value: "description" }
-      ],
       loading: false,
       options: {},
       page : 1,
       sortBy: 'id',
-      sortDesc: true
+      sortDesc: true,
+      headers: [
+        { text: "ID", value: "id"},
+        { text: "Title", value: "name"},
+        { text: "Description", value: "description" }
+      ]
     };
   },
   methods: {
@@ -53,13 +51,17 @@ export default {
         this.loading = false
       });
     },
-    paginateCall(page = this.page){
-      const params = {
+    paginateCall(page){
+      this.page = page;
+      this.handleRequest();
+    },
+    handleRequest(){   
+      const payload = {
+        page : this.page,
         sortBy : this.sortBy,
-        sortDesc : this.sortDesc ? 'desc' : 'asc',
-        page : page
-      };
-      this.fetchItems(params);
+        sortDirection : this.sortDesc ? 'desc' : 'asc'
+      }
+      this.fetchItems(payload);
     }
   },
   computed: {
@@ -68,25 +70,15 @@ export default {
   watch: {
     options: {
       handler () {
-          this.sortBy = this.options.sortBy[0];
-          this.sortDesc = this.options.sortDesc[0];
-          const params = {
-            sortBy : this.options.sortDesc[0] ? this.options.sortBy[0] : this.sortBy,
-            sortDesc : this.options.sortDesc[0] ? 'desc' : 'asc',
-            page : this.page
-          };
-          this.fetchItems(params);
+          this.sortBy = this.options.sortBy[0] ? this.options.sortBy[0] : this.sortBy;
+          this.sortDesc = this.options.sortDesc[0] ? this.options.sortDesc[0] : false;
+          this.handleRequest();
       },
       deep: true,
     },
   },
   created() {
-  const params = {
-    sortBy : this.sortBy,
-    sortDesc : this.sortDesc ? 'desc' : 'asc',
-    page : this.page
-  };
-    this.fetchItems(params);
+    this.handleRequest();
   }
 };
 </script>

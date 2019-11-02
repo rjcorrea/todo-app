@@ -18,7 +18,7 @@ export default {
         params:{
           page : payload.page,
           sortBy: payload.sortBy,
-          sortDesc : payload.sortDesc
+          sortDirection : payload.sortDirection
       }}).then(response => {
         context.commit("SET_ITEMS", response.data);
       });
