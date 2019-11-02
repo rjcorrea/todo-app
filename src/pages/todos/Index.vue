@@ -20,7 +20,7 @@
       :length="getItems.last_page"
       :total-visible="10"
       circle
-      @input="paginateCall"
+      @input="paginate"
     ></v-pagination>
     </v-container>
   </div>
@@ -40,7 +40,9 @@ export default {
       headers: [
         { text: "ID", value: "id"},
         { text: "Title", value: "name"},
-        { text: "Description", value: "description" }
+        { text: "Status", value: "status" },
+        { text: "Date Created", value: "created_at" },
+        { text: "Date Updated", value: "updated_at" }
       ]
     };
   },
@@ -51,7 +53,7 @@ export default {
         this.loading = false
       });
     },
-    paginateCall(page){
+    paginate(page){
       this.page = page;
       this.handleRequest();
     },
@@ -65,7 +67,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters("todos", ["getItems"])
+    ...mapGetters("todos", ["getItems"]),
   },
   watch: {
     options: {

@@ -13,13 +13,8 @@ export default {
     }
   },
   actions: {
-    getItems: (context, payload) => {
-      return axios.get(`${process.env.VUE_APP_MAIN_API}/api/todos`, {
-        params:{
-          page : payload.page,
-          sortBy: payload.sortBy,
-          sortDirection : payload.sortDirection
-      }}).then(response => {
+    getItems: async (context, payload) => {
+      return await axios.get(`${process.env.VUE_APP_MAIN_API}/api/todos`, { params : payload } ).then(response => {
         context.commit("SET_ITEMS", response.data);
       });
     }
